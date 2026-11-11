@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ profile.name }} | Portfolio{% endblock %}
+
+{% block content %}
+  <!-- ===================== HERO ===================== -->
+  <header id="page-top-content" style="background-image: url('{% static profile.hero_bg %}');">
+    <div class="particles" id="particles"></div>
+    <div class="hero-content">
+      <div class="hero-avatar">
+        <img src="{% static profile.hero_avatar %}" alt="{{ profile.name }}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user\'></i>';">
+      </div>
+      <h1>{{ profile.name }}</h1>
+      <h3><em>{{ profile.title }}</em></h3>
+      <a class="btn-hero js-scroll" href="#about">Enter Portfolio</a>
+    </div>
+  </header>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Left: Photo + Socials -->
+        <div class="about-photo">
+          <div class="about-photo-wrap">
+            <img src="{% static profile.about_photo %}" alt="{{ profile.name }}" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user\'></i>';">
+          </div>
+          <ul class="social-links">
+            {% if profile.instagram_url %}
+            <li><a href="{{ profile.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+            {% endif %}
+            {% if profile.linkedin_url %}
+            <li><a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></li>
+            {% endif %}
+            {% if profile.github_url %}
+            <li><a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a></li>
+            {% endif %}
+            {% if profile.leetcode_url %}
+            <li><a href="{{ profile.leetcode_url }}" target="_blank" rel="noopener noreferrer" aria-label="LeetCode" title="LeetCode"><i class="fa-solid fa-code"></i></a></li>
+            {% endif %}
+          </ul>
+        </div>
+
+        <!-- Right: Text -->
+        <div class="about-text">
+          <h4>Hi, I'm Gourav Berwal.</h4>
+          <p class="subtitle">{{ profile.sub_title }}</p>
+          <p>I'm a Computer Science and Engineering student at <strong>CGC University, Mohali</strong>, with a strong interest in software development, data analytics, and building technology that solves real-world problems.</p>
+          <p>I enjoy understanding how things work, exploring data, writing code, and transforming complex problems into simple, practical solutions. My approach combines analytical thinking with a passion for continuous learning and building.</p>
+          <p>My technical interests include <strong>Python, SQL, Data Analytics, Data Visualization, and Backend Development</strong>. I enjoy working with data, identifying meaningful patterns, developing applications, and creating solutions that are both useful and scalable.</p>
+          <p>Currently, I'm gaining professional experience as a <strong>Python Developer Intern at AlphaWizz</strong>, where I'm strengthening my development skills and learning how software is designed and built in a professional environment.</p>
+          <p>Beyond technology, I believe in curiosity, consistency, and lifelong learning. I enjoy reading novels, listening to music, and exploring new ideas that challenge the way I think.</p>
+          <p class="about-quote"><strong>I don't just want to write code. I want to build things that make a difference.</strong></p>
+
+          <div class="about-btns">
+            <a class="btn-outline js-scroll" href="#skills">Skills</a>
+            <a class="btn-outline js-scroll" href="#projects">Projects</a>
+            <a class="btn-outline js-scroll" href="#timeline">Experience</a>
+            <a class="btn-solid" href="{% if profile.resume_link %}{{ profile.resume_link }}{% else %}{% url 'portfolio:resume' %}{% endif %}" target="_blank" rel="noopener noreferrer">
+              <i class="fa-solid fa-file-pdf"></i> View / Download Resume
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SKILLS ===================== -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Skills</h2>
+        <div class="underline"></div>
+        <p>Below are some of my skills, and I&rsquo;m always excited to learn more.</p>
+      </div>
+
+      <div class="skills-grid">
+        {% for skill in skills %}
+        <div class="skill-item">
+          <div class="skill-icon">
+            <img src="{% static skill.icon_image %}" alt="{{ skill.name }}" onerror="this.style.display='none';">
+          </div>
+          <div class="skill-name">{{ skill.name }}</div>
+        </div>
+        {% empty %}
+        <div class="skill-item"><div class="skill-name">Python</div></div>
+        <div class="skill-item"><div class="skill-name">SQL</div></div>
+        <div class="skill-item"><div class="skill-name">Power BI</div></div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Projects</h2>
+        <div class="underline"></div>
+        <p>Here are some of the projects that I have worked on</p>
+      </div>
+
+      <!-- Filter Bar -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="filter-se">Software Engineering</button>
+        <button class="filter-btn" data-filter="filter-ml">Machine Learning / AI</button>
+        <button class="filter-btn" data-filter="filter-da">Data Analytics</button>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="projects-grid" id="projectsGrid">
+        {% for project in projects %}
+        <div class="portfolio-item {{ project.category }}">
+          <div class="project-container">
+            <div class="front" style="background-image: url('{% static project.image %}');">
+              <span class="flip-hint"><i class="fa-solid fa-repeat"></i> Tap to flip</span>
+              <div class="inner">
+                <p>{{ project.title }}</p>
+                <span>{{ project.tech_stack }}</span>
+              </div>
+            </div>
+            <div class="back">
+              <div class="inner">
+                <div class="portfolio-links">
+                  {% if project.github_url %}
+                  <a href="{{ project.github_url }}" target="_blank" title="GitHub Repository"><i class="fa-brands fa-github"></i> GitHub</a>
+                  {% endif %}
+                  {% if project.live_url %}
+                  <a href="{{ project.live_url }}" target="_blank" title="Live Preview"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
+                  {% endif %}
+                  {% if project.doc_url %}
+                  <a href="{{ project.doc_url }}" target="_blank" title="Presentation / Document"><i class="bi bi-file-earmark-pdf"></i> Docs</a>
+                  {% endif %}
+                </div>
+                <div class="list">
+                  <ul>
+                    {% for pt in project.get_points %}
+                    <li>{{ pt }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No projects added yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== EXPERIENCE / TIMELINE ===================== -->
+  <section id="timeline">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Experience</h2>
+        <div class="underline"></div>
+        <p>A short summary of my Work Experience</p>
+      </div>
+
+      <div class="timeline">
+        {% for exp in experiences %}
+        <div class="timeline-item {% if exp.is_right %}right{% endif %}">
+          <div class="timeline-dot">
+            <img src="{% static exp.logo %}" alt="{{ exp.company }} Logo" onerror="this.parentElement.innerHTML='<i class=\'fa-solid fa-briefcase\'></i>';">
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">{{ exp.date_range }}</div>
+            <h4>
+              {% if exp.company_url %}
+              <a href="{{ exp.company_url }}" target="_blank">{{ exp.role }}</a>
+              {% else %}
+              {{ exp.role }}
+              {% endif %}
+            </h4>
+            <p class="timeline-place">{{ exp.company }}</p>
+            <ul>
+              {% for pt in exp.get_points_list %}
+              <li>{{ pt }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No experience entries found.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" style="background-image: url('{% static profile.contact_bg %}');">
+    <div class="container">
+      <div class="section-heading">
+        <h2>Contact Me</h2>
+        <div class="underline"></div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info-box">
+          <div class="contact-info-item">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+              <strong>Email</strong>
+              <a href="mailto:{{ profile.email }}">{{ profile.email }}</a>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <i class="fa-solid fa-phone"></i>
+            <div>
+              <strong>Phone</strong>
+              <a href="tel:{{ profile.phone }}">{{ profile.phone }}</a>
+            </div>
+          </div>
+          <div class="contact-socials">
+            {% if profile.instagram_url %}
+            <a href="{{ profile.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            {% endif %}
+            {% if profile.linkedin_url %}
+            <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            {% endif %}
+            {% if profile.github_url %}
+            <a href="{{ profile.github_url }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+            {% endif %}
+            {% if profile.leetcode_url %}
+            <a href="{{ profile.leetcode_url }}" target="_blank" rel="noopener noreferrer" aria-label="LeetCode" title="LeetCode"><i class="fa-solid fa-code"></i></a>
+            {% endif %}
+          </div>
+        </div>
+
+        <form id="contactForm" method="post" action="{% url 'portfolio:contact_submit' %}" novalidate>
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" name="name" id="name" placeholder="Your Name *" required>
+              <span class="error-msg" id="nameError">Please enter your name.</span>
+            </div>
+            <div class="form-group">
+              <input type="email" name="email" id="email" placeholder="Your Email *" required>
+              <span class="error-msg" id="emailError">Please enter a valid email.</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="tel" name="phone" id="phone" placeholder="Your Phone">
+          </div>
+          <div class="form-group">
+            <textarea name="message" id="message" rows="5" placeholder="Your Message *" required></textarea>
+            <span class="error-msg" id="messageError">Please enter a message.</span>
+          </div>
+          <div id="formStatus"></div>
+          <button type="submit" id="sendBtn">Send Message <i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}
