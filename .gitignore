@@ -21,6 +21,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 *.sqlite3
+!portfolio/seed_data.sqlite3
 
 # Media uploads (optional to keep or gitignore)
 # media/

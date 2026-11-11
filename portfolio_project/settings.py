@@ -10,7 +10,13 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Detect Vercel environment
-IS_VERCEL = os.environ.get('VERCEL') == '1'
+IS_VERCEL = bool(
+    os.environ.get('VERCEL') == '1' or
+    'VERCEL' in os.environ or
+    'VERCEL_ENV' in os.environ or
+    'VERCEL_URL' in os.environ or
+    'AWS_LAMBDA_FUNCTION_NAME' in os.environ
+)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(

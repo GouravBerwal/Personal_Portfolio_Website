@@ -9,6 +9,15 @@ from .forms import ContactForm
 
 
 def index(request):
+    # Self-healing safeguard: if database is empty on serverless start, populate it
+    try:
+        if Skill.objects.count() == 0 or Project.objects.count() == 0:
+            from django.core.management import call_command
+            call_command('migrate', interactive=False, verbosity=0)
+            call_command('seed_portfolio', interactive=False, verbosity=0)
+    except Exception as e:
+        print(f"Self-heal database notice: {e}")
+
     profile = Profile.objects.first()
     if not profile:
         profile = Profile.objects.create()
