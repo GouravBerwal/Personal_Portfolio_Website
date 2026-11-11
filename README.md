@@ -143,6 +143,23 @@ Personal_Portfolio_Website/
 
 ---
 
+## 🌐 Free Lifetime Deployment (Render / Vercel)
+
+This project is pre-configured with production assets (`gunicorn`, `whitenoise`, `build.sh`, `render.yaml`, and `vercel.json`) for **100% free lifetime deployment**.
+
+### Option A: Deploy to Render (Recommended — Free Lifetime)
+1. Sign up / Log in to [Render.com](https://render.com/) with your GitHub account.
+2. Click **New +** > **Web Service**.
+3. Select and connect your repository: `GouravBerwal/Personal_Portfolio_Website`.
+4. Render will automatically detect settings, or enter:
+   - **Environment**: `Python 3`
+   - **Build Command**: `./build.sh`
+   - **Start Command**: `gunicorn portfolio_project.wsgi:application`
+   - **Plan**: `Free`
+5. Click **Deploy Web Service** — Your portfolio will be live in 2 minutes with free HTTPS!
+
+---
+
 ## 🚀 Quick Start / Local Setup
 
 Follow these steps to run the portfolio website locally on your machine:
