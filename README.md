@@ -143,20 +143,23 @@ Personal_Portfolio_Website/
 
 ---
 
-## 🌐 Free Lifetime Deployment (Render / Vercel)
+## 🌐 Free Lifetime Deployment on Vercel
 
-This project is pre-configured with production assets (`gunicorn`, `whitenoise`, `build.sh`, `render.yaml`, and `vercel.json`) for **100% free lifetime deployment**.
+This project is pre-configured with **Vercel Serverless Architecture** (`vercel.json`, `api/index.py`, and `whitenoise`) for **100% free lifetime deployment** with global edge CDN and zero server maintenance.
 
-### Option A: Deploy to Render (Recommended — Free Lifetime)
-1. Sign up / Log in to [Render.com](https://render.com/) with your GitHub account.
-2. Click **New +** > **Web Service**.
-3. Select and connect your repository: `GouravBerwal/Personal_Portfolio_Website`.
-4. Render will automatically detect settings, or enter:
-   - **Environment**: `Python 3`
-   - **Build Command**: `./build.sh`
-   - **Start Command**: `gunicorn portfolio_project.wsgi:application`
-   - **Plan**: `Free`
-5. Click **Deploy Web Service** — Your portfolio will be live in 2 minutes with free HTTPS!
+### 🚀 Deploying to Vercel (Step-by-Step):
+1. Sign up or log in to **[Vercel.com](https://vercel.com/)** using your GitHub account (`GouravBerwal`).
+2. Click **"Add New..."** > **"Project"**.
+3. Import your repository: **`GouravBerwal/Personal_Portfolio_Website`**.
+4. In the Project Configuration screen:
+   - **Framework Preset**: Leave as *Other* (or auto-detected).
+   - **Root Directory**: `./` (default).
+   - (Optional) Under **Environment Variables**, you can add:
+     - `DJANGO_DEBUG` = `False`
+     - `DJANGO_SECRET_KEY` = *(a random secure string)*
+5. Click **"Deploy"**!
+6. In about 60 seconds, your portfolio will be live at:
+   `https://personal-portfolio-website-xxx.vercel.app` (with free automatic SSL 🔒 and instant global CDN)!
 
 ---
 
